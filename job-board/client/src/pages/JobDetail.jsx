@@ -11,7 +11,7 @@ const JobDetail = () => {
 
   useEffect(() => {
     // Basic fetch
-    axios.get(`http://localhost:5000/api/v1/gigs/${id}`)
+    axios.get(`https://jobboard-api-92sr.onrender.com/api/v1/gigs/${id}`)
       .then(res => setJob(res.data.data))
       .catch(err => console.error("Job vanished?", err));
   }, [id]);
@@ -20,7 +20,7 @@ const JobDetail = () => {
     if (!user) return alert("Please login first!");
     
     try {
-      await axios.post(`http://localhost:5000/api/v1/gigs/${id}/apply`);
+      await axios.post(`https://jobboard-api-92sr.onrender.com/api/v1/gigs/${id}/apply`);
       setApplied(true);
       alert("Resume sent! Good luck.");
     } catch (err) {

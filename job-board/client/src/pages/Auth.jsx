@@ -20,7 +20,7 @@ const Auth = () => {
       : { ...formData, role: 'scout' };
 
     try {
-      const res = await axios.post(`http://localhost:5000/api/v1/auth${endpoint}`, payload);
+      const res = await axios.post(`https://jobboard-api-92sr.onrender.com/api/v1/auth${endpoint}`, payload);
       login(res.data.token, res.data.data?.user);
       navigate('/board');
     } catch (err) {

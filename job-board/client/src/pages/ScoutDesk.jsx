@@ -7,7 +7,7 @@ const ScoutDesk = () => {
   const handlePost = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/v1/gigs', formData);
+      await axios.post('https://jobboard-api-92sr.onrender.com/api/v1/gigs', formData);
       alert('Mission Posted Successfully!');
       setFormData({ title: '', description: '', location: '', salaryRange: '' });
     } catch (err) {

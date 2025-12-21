@@ -12,7 +12,7 @@ const LandingZone = () => {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/v1/gigs/search');
+        const res = await axios.get('https://jobboard-api-92sr.onrender.com/api/v1/gigs/search');
         // Just taking the top 3 latest ones
         setFeaturedGigs(res.data.data.slice(0, 3));
       } catch (err) {

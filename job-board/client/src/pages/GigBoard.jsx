@@ -6,7 +6,7 @@ const GigBoard = () => {
   const [gigs, setGigs] = useState([]);
   
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/gigs/search')
+    axios.get('https://jobboard-api-92sr.onrender.com/api/v1/gigs/search')
       .then(res => setGigs(res.data.data))
       .catch(err => console.log("Backend offline"));
   }, []);
