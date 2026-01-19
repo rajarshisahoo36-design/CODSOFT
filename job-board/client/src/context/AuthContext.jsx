@@ -1,38 +1,41 @@
-import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { createContext, useState, useEffect } from "react";
 
+// 1. Create the Context
 export const AuthContext = createContext();
 
+// 2. Create the Provider Component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('jwt') || '');
+  const [loading, setLoading] = useState(true);
 
-  // Check if user is already logged in on mount
+  // Check if user is already logged in when the app starts
   useEffect(() => {
-    if (token) {
-      // Decode user or fetch profile (Mocking user extraction for brevity)
-      // In real app: verify token with backend /me endpoint
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      setUser({ role: 'scout' }); // TODO: Decode actual role from JWT payload
-    }
-  }, [token]);
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
 
-  const login = (newToken, userData) => {
-    localStorage.setItem('jwt', newToken);
-    setToken(newToken);
+    if (storedUser && storedToken) {
+      setUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
+  }, []);
+
+  // Login Function
+  const login = (userData, token) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", token);
     setUser(userData);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
   };
 
+  // Logout Function
   const logout = () => {
-    localStorage.removeItem('jwt');
-    setToken(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  /* Neutral background */
+  color: #1e293b;
+  /* Slate-800: Professional dark gray */
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  /* Improve readability */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #0f172a;
+  /* Slate-900: Strong headings */
+  font-weight: 600;
+}
+
+a {
+  color: #2563eb;
+  /* Blue-600: Professional link color */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -3,29 +3,31 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-const accessRoutes = require('./routes/accessRoutes');
-const marketRoutes = require('./routes/marketRoutes');
+// Import Route Files
+// Ensure these filenames match EXACTLY what you have in your folders
+const authRoutes = require('./routes/accessRoutes'); 
+const jobRoutes = require('./routes/jobs'); 
 
 const app = express();
 
 // Middleware
-app.use(cors()); // Allow requests from our React frontend
+app.use(cors()); // Allow requests from frontend
 app.use(express.json()); // Parse JSON bodies
+
+// --- ROUTE MOUNTING ---
+// 1. Authentication Routes (Login/Register)
+app.use('/api/v1/auth', authRoutes);
+
+// 2. Job Routes (Post a Job, Get Jobs)
+app.use('/api/v1/jobs', jobRoutes);
 
 // Database Connection
 const dbURI = process.env.DATABASE_URL;
-// TEMPORARY FIX: Hardcoding the address
-// const dbURI = "mongodb://127.0.0.1:27017/codsoft-jobboard";
 mongoose.connect(dbURI)
   .then(() => console.log('DB Connection: SOLID'))
   .catch((err) => console.log('DB Connection: FAILED', err));
 
-// Route Mounting
-app.use('/api/v1/auth', accessRoutes);
-app.use('/api/v1/gigs', marketRoutes);
-
-// --- FIXED 404 HANDLER ---
-// We changed app.all('*') to app.use() to fix the "Missing parameter" crash
+// --- 404 HANDLER ---
 app.use((req, res) => {
   res.status(404).json({
     status: 'fail',
